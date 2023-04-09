@@ -51,13 +51,18 @@
     <div class="container">
         <h1>{{ project['name'] }}</h1>
         <p><strong>Manager:</strong> {{ project['manager'] }}</p>
+        <hr>
         <p><strong>Team:</strong></p>
         <ul>
         {% for member in project['team'] %}
             <li>{{ member }}</li>
         {% endfor %}
         </ul>
-        <a href="/projects">Back to Projects</a>
+        <hr>
+        <p><strong>Details:</strong> {{ project['details'] }}</p>
+        <br>
+        <br>
+        <button><a href="/projects">Back to Projects</a></button>
     </div>
 </body>
 </html>

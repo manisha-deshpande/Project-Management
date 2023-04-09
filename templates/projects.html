@@ -43,7 +43,7 @@
         <ul class="row">
             {% for project in projects %}
             <li class="col-md-6">
-                <a href="{{ url_for('get_project_details', project_id=project.id) }}">Project {{ project.id }} - {{ project.name }}</a>
+                <a href="{{ url_for('get_project_details', project_id=project.id) }}">Project {{ project.id }} - {{ project.project.name }}</a>
             </li>
             {% endfor %}
         </ul>

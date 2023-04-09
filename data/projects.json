@@ -1,1 +1,45 @@
-{"4": {"name": "Project y", "manager": "Puneet", "team": ["Sri", "Hri", "Bri"], "details": "We work with the y-men"}, "5": {"name": "Project z", "manager": "ABCd", "team": ["Sri", "Hri", "Bri", "bro"], "details": "We work with the z-men"}, "6": {"name": "Project X", "manager": "Xavier", "team": ["Wolverine", "Storm", "Cyclops"], "details": "We work with the X-men"}, "7": {"name": "Project A", "manager": "Cap", "team": ["Iron Man", " Hulk", " thor", " hawkeye"], "details": "We save the world"}, "8": {"name": "Project z", "manager": "Capti", "team": ["Ir", "HM", "HMM", "Sri"], "details": "We work with the X-people"}, "9": {"name": "Project z", "manager": "Capti", "team": ["Ir", "HM", "HMM", "Sri"], "details": "We work with the X-people"}, "10": {"name": "Project 1997", "manager": "Daddr", "team": ["Brother", " Brother", " friend"], "details": "Project starting now"}, "11": {"name": "Project S", "manager": "Snape", "team": ["Harry", "Ron", "Hermoine"], "details": "You're a wizard Harry"}, "12": {"name": "Project Test", "manager": "Joe", "team": ["Harry", " Marry", " Barry"], "details": "This is a test for the code "}}
+{
+  "1": {
+    "name": "EffortLogger",
+    "manager": "Prof. Rob Lynn",
+    "team": [
+      "Manisha",
+      "Prateek",
+      "Zahra"
+    ],
+    "details": "This is the implementation of a feature for EffortLogger."
+  },
+  "2": {
+    "name": "Project SER-502",
+    "manager": "Dr. Bansal",
+    "team": [
+      "Manisha"
+    ],
+    "details": "This is the assignment for SER-502."
+  },
+  "3": {
+    "name": "Project Software Agility",
+    "manager": "Dr. K Gary",
+    "team": [
+      "Manisha",
+      "Zahra"
+    ],
+    "details": "This is the assignment for SER-516."
+  },
+  "4": {
+    "name": "Image Analytics",
+    "manager": "Prof. Ling",
+    "team": [
+      "Prateek"
+    ],
+    "details": "This is the assignment for Image Analytics."
+  },
+  "5": {
+    "name": "SVVT",
+    "manager": "Prof. Collofello",
+    "team": [
+      "Zahra"
+    ],
+    "details": "This is the assignment for Software validation verification Testing."
+  }
+}

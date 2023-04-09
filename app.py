@@ -123,7 +123,7 @@ def login():
 def admin_ui():
     print('An admin logged in')
     # Redirect to the projects page
-    return redirect(url_for('get_projects', session=session))
+    return redirect(url_for('get_users', session=session))
 
 
 def manager_ui():
