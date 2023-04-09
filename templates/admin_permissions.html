@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Edit Profile</title>
+    <title>Edit User Permission</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -50,30 +50,18 @@
 </head>
 <body>
 <div class="container">
-    <h1>Edit Profile</h1>
+    <h1>Edit User Permission</h1>
     <form method="POST">
 
         <div class="form-group">
             <label for="full_name">Full Name:</label>
-            <input type="text" id="full_name" name="full_name" value="{{ full_name }}" class="form-control" required>
+            <input type="text" id="full_name" name="full_name" value="{{ full_name }}" class="form-control" readonly>
         </div>
         <div class="form-group">
-            <label for="birthday">Birthday:</label>
-            <input type="date" id="birthday" name="birthday" value="{{ birthday }}" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="gender">Gender</label>
-            <select name="gender" id="gender" class="form-control">
-                {% for gender_name in genders %}
-                <option value="{{ gender_name }}" {% if gender == gender_name %}selected{% endif %}>{{ gender_name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="experience_level">Experience Level:</label>
-            <select name="experience_level" id="experience_level" value="{{ experience_level }}" class="form-control">
-                {% for exp_lvl_name in experience_levels %}
-                <option value="{{ exp_lvl_name }}" {% if experience_level == exp_lvl_name %}selected{% endif %}>{{ exp_lvl_name }}</option>
+            <label for="role">Role:</label>
+            <select name="role" id="role" class="form-control">
+                {% for role_val in roles %}
+                <option value="{{ role_val }}" {% if role_name == role_val %}selected{% endif %}>{{ role_val }}</option>
                 {% endfor %}
             </select>
         </div>

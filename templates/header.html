@@ -58,7 +58,7 @@
             <li><a href="{{ url_for('get_member_projects') }}">Members</a></li>
             {% endif %}
             {% if session['role'] in ['admin'] %}
-            <li><a href="">Admin</a></li>
+            <li><a href="{{ url_for('get_users') }}">Admin</a></li>
             {% endif %}
             {% if session['role'] in ['admin','manager','member'] %}
             <li><a href="{{ url_for('index') }}">Logout</a></li>

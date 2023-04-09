@@ -18,6 +18,9 @@ PROJECTS_FILE = os.path.join(data_dir, 'projects.json')
 CREDENTIALS_FILE = os.path.join(data_dir, 'credentials.json')
 # Define a global variable to store user data
 USER_DATA_FILE = os.path.join(data_dir,'user_data.json')
+genders = ['male', 'female', 'choose-not-to-say']
+experience_levels = ['Project Manager','Member of Technical Staff I','Member of Technical Staff II','Member of Technical Staff III','Software Development Engineer I','Software Development Engineer II','Sr. Software Developer']
+roles = ['admin','manager','member']
 
 try:
     with open("secret_key.txt", "r") as f:
@@ -330,7 +333,48 @@ def edit_profile():
 
 
     # Render the edit profile template with the user data
-    return render_template('edit_profile.html', username=username, full_name=full_name, birthday=birthday, gender=gender, experience_level= experience_level)
+    return render_template('edit_profile.html', username=username, full_name=full_name, birthday=birthday, gender=gender, genders=genders, experience_level= experience_level, experience_levels= experience_levels)
+
+@app.route('/users/<user_id>', methods=['GET', 'POST'])
+def edit_user_permission(user_id):
+    if 'authenticated' not in session or not session['authenticated']:
+        return redirect(url_for('login'))
+    # Load the user data from the JSON file
+    user_data = load_user_data()
+
+    # Get the username from the parameter
+    username = user_id
+    user = user_data[username]
+
+    if request.method == 'POST':
+        # Update the user's permission with the form data
+        user_data[username]['role'] = request.form['role']
+
+        # Save the updated user data to the JSON file
+        save_user_data(user_data)
+
+        # Redirect to the user profile page
+        return redirect(url_for('get_users'))
+
+    # Get the user's current profile data
+    full_name = user['full_name']
+    role_name = user['role']
+
+    # Render the edit user permission template with the user data
+    return render_template('admin_permissions.html', session=session, roles=roles, full_name=full_name, role_name=role_name)
+
+@app.route('/users')
+def get_users():
+    # Check if the user is authenticated
+    ##    return redirect(url_for('login'))
+    # Read the project data from the projects.json file
+    if 'authenticated' not in session or not session['authenticated']:
+        return redirect(url_for('login'))
+    with open(USER_DATA_FILE, 'r') as f:
+        users_data = json.load(f)
+    # Convert the dictionary to a list of projects and pass to the template
+    users = [{'id': id, 'user_info': users_data[id]} for id in users_data]
+    return render_template('admin_users.html', session=session, users=users)
 
 # Run the Flask application
 if __name__ == '__main__':
