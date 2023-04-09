@@ -62,8 +62,14 @@ def profile():
     # Get the user's join date
     join_date = user_data[username]['join_date']
 
+    # Get the user's gender
+    gender = user_data[username]['gender']
+
+    # Get the user's experience level
+    experience_level = user_data[username]['experience_level']
+
     # Render the user profile template with the user data
-    return render_template('profile.html', username=username, full_name=full_name, birthday=birthday, join_date=join_date)
+    return render_template('profile.html', session=session, username=username, full_name=full_name, birthday=birthday, join_date=join_date, gender = gender, experience_level = experience_level)
 
 
 
@@ -114,19 +120,19 @@ def login():
 def admin_ui():
     print('An admin logged in')
     # Redirect to the projects page
-    return redirect(url_for('get_projects'))
+    return redirect(url_for('get_projects', session=session))
 
 
 def manager_ui():
     print('A manager logged in')
     # Redirect to the new projects page
-    return redirect(url_for('new_project'))
+    return redirect(url_for('new_project', session=session))
 
 
 def member_ui():
     print('A member logged in')
     # Redirect to the projects page
-    return redirect(url_for('get_member_projects'))
+    return redirect(url_for('get_member_projects', session=session))
 
 
 @app.route('/authenticate', methods=['GET', 'POST'])
@@ -194,7 +200,7 @@ def get_projects():
         projects_data = json.load(f)
     # Convert the dictionary to a list of projects and pass to the template
     projects = [{'id': id, 'project': projects_data[id]} for id in projects_data]
-    return render_template('projects.html', projects=projects)
+    return render_template('projects.html', session=session, projects=projects)
 
 
 
@@ -226,7 +232,7 @@ def new_project():
             projects_data = json.load(f)
         # Convert the dictionary to a list of projects and pass to the template
         projects = [projects_data[id] for id in projects_data]
-        return render_template('new_project.html', projects=projects)
+        return render_template('new_project.html', session=session, projects=projects)
 
 @app.route('/projects/details/<project_id>')
 def get_project_details(project_id):
@@ -238,7 +244,7 @@ def get_project_details(project_id):
     # Check if the project ID exists in the projects data
     if project_id in projects_data:
         project = projects_data[project_id]
-        return render_template('project_details.html', project=project)
+        return render_template('project_details.html', session=session, project=project)
     else:
         return 'Project not found'
 
@@ -261,7 +267,7 @@ def get_member_projects():
         for project_id, project_data in projects_data.items():
             if member_name in project_data['team']:
                 member_projects.append(project_data)
-        return render_template('member_projects.html', member_name=member_name, projects=member_projects)
+        return render_template('member_projects.html', session=session, member_name=member_name, projects=member_projects)
     else:
         # Read the existing projects data from the projects.json file
         with open(PROJECTS_FILE, 'r') as f:
@@ -271,7 +277,7 @@ def get_member_projects():
         for project_id, project_data in projects_data.items():
             for member in project_data['team']:
                 team_members.add(member)
-        return render_template('members.html', team_members=team_members)
+        return render_template('members.html', session=session, team_members=team_members)
 
 # Run the Flask application
 if __name__ == '__main__':
