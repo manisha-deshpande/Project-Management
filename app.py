@@ -7,6 +7,7 @@ import io
 import base64
 import datetime
 
+# Initialize Flask app
 app = Flask(__name__)
 
 
@@ -15,6 +16,8 @@ app = Flask(__name__)
 data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 PROJECTS_FILE = os.path.join(data_dir, 'projects.json')
 CREDENTIALS_FILE = os.path.join(data_dir, 'credentials.json')
+# Define a global variable to store user data
+USER_DATA_FILE = os.path.join(data_dir,'user_data.json')
 
 try:
     with open("secret_key.txt", "r") as f:
@@ -24,16 +27,9 @@ except FileNotFoundError:
     secret = pyotp.random_base32()
     with open("secret_key.txt", "w") as f:
         f.write(secret)
-        
+
 totp = pyotp.TOTP(secret)
 
-
-
-# Define a global variable to store user data
-USER_DATA_FILE = os.path.join(data_dir,'user_data.json')
-
-# Initialize Flask app
-app = Flask(__name__)
 
 # Define a function to load user data from a JSON file
 def load_user_data():
@@ -86,7 +82,7 @@ def login():
         # Read the login data from the request form
         username = request.form['username']
         password = request.form['password']
-        
+
         # Verify the login credentials
         with open(CREDENTIALS_FILE, 'r') as f:
             credentials_data = json.load(f)
@@ -106,7 +102,7 @@ def login():
             img_str = base64.b64encode(buffered.getvalue()).decode("ascii")
 
             return render_template('authenticate.html', qr_code=img_str, username=username)
-       
+
         else:
             return render_template('login.html', error=True)
     else:
@@ -116,14 +112,14 @@ def login():
 def authenticate():
     if request.method == 'POST':
         # Read the authentication data from the request form
-        
+
         code = request.form['code']
 
         # Verify the authentication code
         if totp.verify(code):
             # Set a session variable to indicate that the user is authenticated
             session['authenticated'] = True
-            
+
             # Redirect to the projects page
             return redirect(url_for('new_project'))
         else:
@@ -145,7 +141,7 @@ def register():
         # Read the registration data from the request form
         email = request.form['email']
         password = request.form['password']
-        
+
         # Update the credentials JSON with the new user's email and password
         with open(CREDENTIALS_FILE, 'r+') as f:
             credentials_data = json.load(f)
@@ -153,7 +149,7 @@ def register():
             f.seek(0)
             json.dump(credentials_data, f)
             f.truncate()
-        
+
         # Redirect to the login page
         return redirect(url_for('login'))
     else:
@@ -220,7 +216,7 @@ def get_project_details(project_id):
     else:
         return 'Project not found'
 
-    
+
 
 
 
