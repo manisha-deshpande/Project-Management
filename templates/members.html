@@ -1,0 +1,68 @@
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Team Members</title>
+	<!-- Bootstrap CSS CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous">
+	<style>
+		/* Custom CSS */
+		body {
+			padding: 20px;
+		}
+		form {
+			margin-bottom: 20px;
+		}
+		h1 {
+			margin-bottom: 30px;
+		}
+    .team-member-button {
+      margin: 5px;
+    }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1 class="text-center mb-5">Team Members</h1>
+		<form method="POST" action="{{ url_for('get_member_projects') }}">
+			<div class="form-group">
+				<label for="member_name">Enter a team member name:</label>
+				<input type="text" class="form-control" name="member_name" id="member_name" required>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		<hr>
+    <br>
+    <h2>All Team Members:</h2>
+    <div id="team-members-list">
+      {% for member in team_members %}
+      <button type="button" class="btn btn-secondary team-member-button">{{ member }}</button>
+      {% endfor %}
+    </div>
+    <script>
+      const teamMemberButtons = document.querySelectorAll('.team-member-button');
+      const memberForm = document.querySelector('form');
+      const memberNameInput = document.getElementById('member_name');
+      teamMemberButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+          memberNameInput.value = event.target.innerText;
+          memberForm.submit();
+        });
+      });
+    </script>
+	</div>
+	<!-- Bootstrap JS CDN -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+</body>
+</html>

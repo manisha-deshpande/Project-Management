@@ -1,0 +1,33 @@
+{
+    "example@example.com": {
+      "full_name": "John Doe",
+      "birthday": "1990-01-01",
+      "join_date": "2021-01-01"
+    },
+    "test@test.com": {
+      "full_name": "Jane Smith",
+      "birthday": "1995-05-05",
+      "join_date": "2022-02-01"
+    },
+    "prateekmohan1997@gmail.com": {
+      "full_name": "Prateek Mohan",
+      "birthday": "1997-01-01",
+      "join_date": "2020-12-01"
+    },
+    "Manisha@gmail.com": {
+      "full_name": "Manisha Singh",
+      "birthday": "1988-06-15",
+      "join_date": "2021-05-01"
+    },
+    "zahra@gmail.com": {
+      "full_name": "Zahra Ali",
+      "birthday": "1992-09-10",
+      "join_date": "2022-03-01"
+    },
+    "abcd@gmail.com": {
+      "full_name": "Alice Smith",
+      "birthday": "1999-12-31",
+      "join_date": "2023-01-01"
+    }
+  }
+  

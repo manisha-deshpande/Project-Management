@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My App</title>
+    <style>
+        /* override all other styles */
+        * {
+            font-family: Arial, sans-serif !important;
+            font-size: 16px !important;
+            color: #333 !important;
+        }
+
+        /* style the navigation bar */
+        nav {
+            background-color: #0074D9;
+            color: white;
+            padding: 10px;
+        }
+
+        /* style the navigation links */
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav ul li {
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background-color: white;
+            color: #0074D9;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('get_projects') }}">Projects</a></li>
+            <li><a href="{{ url_for('new_project') }}">New Project</a></li>
+            <li><a href="{{ url_for('get_member_projects') }}">Members</a></li>
+            
+            <li><a href="{{ url_for('index') }}">Logout</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

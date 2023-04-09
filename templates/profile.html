@@ -1,0 +1,37 @@
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Profile</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      p {
+        margin: 10px 0;
+        font-size: 18px;
+        color: #666;
+      }
+      .user-info {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="user-info">
+      <h1>Welcome, {{ username }}!</h1>
+      <p>Full Name: {{ full_name }}</p>
+      <p>Birthday: {{ birthday }}</p>
+      <p>Join Date: {{ join_date }}</p>
+    </div>
+  </body>
+</html>

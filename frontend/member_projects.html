@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EL-Member Projects</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header">
+                    <h3 class="text-center font-weight-light my-4">{{ member_name }}'s Projects</h3>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-6 offset-md-3">
+                        {% for project in projects %}
+                        <ul class="list-group">
+                            <li class="list-group-item">{{ project['name'] }}</li>
+                            <li class="list-group-item"><strong>Manager:</strong> {{ project['manager'] }}</li>
+                            <li class="list-group-item"><strong>Team Members:</strong> {{ project['team']|join(', ') }}</li>
+                            {% if 'details' in project %}
+                            <li class="list-group-item"><strong>Details:</strong> {{ project['details'] }}</li>
+                            {% endif %}
+                        </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

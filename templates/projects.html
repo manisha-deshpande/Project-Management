@@ -1,0 +1,55 @@
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 3rem;
+        }
+        ul {
+            margin-top: 30px;
+            list-style: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #c9c9c9;
+            transition: all 0.3s ease-in-out;
+        }
+        li:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 15px #c9c9c9;
+        }
+        a {
+            color: #212529;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project List</h1>
+        <ul class="row">
+            {% for project in projects %}
+            <li class="col-md-6">
+                <a href="{{ url_for('get_project_details', project_id=project.id) }}">Project {{ project.id }} - {{ project.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
