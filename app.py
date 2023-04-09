@@ -5,7 +5,7 @@ import pyotp
 import qrcode
 import io
 import base64
-import datetime
+from datetime import datetime
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -167,6 +167,25 @@ def index():
     return render_template('index.html')
 
 
+def add_new_user_to_user_data(email):
+    user_data = load_user_data()
+    # Get the current date
+    now = datetime.now()
+
+    # Format the date as 'YYYY-MM-DD'
+    formatted_date = now.strftime('%Y-%m-%d')
+
+    user_data[email] = {
+        'full_name': None,
+        'birthday': None,
+        'join_date': formatted_date,
+        'gender': 'choose-not-to-say',
+        'experience_level' : None,
+        'role': 'member'
+    }
+    save_user_data(user_data)
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -179,6 +198,7 @@ def register():
             credentials_data = json.load(f)
             credentials_data[email] = password
             f.seek(0)
+            add_new_user_to_user_data(email)
             json.dump(credentials_data, f)
             f.truncate()
 
@@ -278,6 +298,39 @@ def get_member_projects():
             for member in project_data['team']:
                 team_members.add(member)
         return render_template('members.html', session=session, team_members=team_members)
+
+# Define a route for editing user profile
+@app.route('/edit-profile', methods=['GET', 'POST'])
+def edit_profile():
+    # Load the user data from the JSON file
+    user_data = load_user_data()
+
+    # Get the current user's username from the session
+    username = session['username']
+    user = user_data[username]
+
+    if request.method == 'POST':
+        # Update the user data with the form data
+        user_data[username]['full_name'] = request.form['full_name']
+        user_data[username]['birthday'] = request.form['birthday']
+        user_data[username]['gender'] = request.form['gender']
+        user_data[username]['experience_level'] = request.form['experience_level']
+
+        # Save the updated user data to the JSON file
+        save_user_data(user_data)
+
+        # Redirect to the user profile page
+        return redirect(url_for('profile'))
+
+    # Get the user's current profile data
+    full_name = user['full_name']
+    birthday = user['birthday']
+    gender = user['gender']
+    experience_level = user['experience_level']
+
+
+    # Render the edit profile template with the user data
+    return render_template('edit_profile.html', username=username, full_name=full_name, birthday=birthday, gender=gender, experience_level= experience_level)
 
 # Run the Flask application
 if __name__ == '__main__':
