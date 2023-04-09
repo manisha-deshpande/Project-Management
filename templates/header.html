@@ -47,11 +47,22 @@
 <body>
     <nav>
         <ul>
+            {% if session['role'] in ['admin','manager','member'] %}
             <li><a href="{{ url_for('get_projects') }}">Projects</a></li>
+            {% endif %}
+            {% if session['role'] in ['admin','manager'] %}
             <li><a href="{{ url_for('new_project') }}">New Project</a></li>
+            {% endif %}
+            {% if session['role'] in ['admin','manager','member'] %}
+            <li><a href="{{ url_for('profile') }}">Profile</a></li>
             <li><a href="{{ url_for('get_member_projects') }}">Members</a></li>
-            
+            {% endif %}
+            {% if session['role'] in ['admin'] %}
+            <li><a href="">Admin</a></li>
+            {% endif %}
+            {% if session['role'] in ['admin','manager','member'] %}
             <li><a href="{{ url_for('index') }}">Logout</a></li>
+            {% endif %}
         </ul>
     </nav>
 </body>

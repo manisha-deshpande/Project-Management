@@ -1,0 +1,94 @@
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 5px;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        input[type=text] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Edit Profile</h1>
+    <form method="POST">
+
+        <div class="form-group">
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" value="{{ full_name }}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" name="birthday" value="{{ birthday }}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select name="gender" id="gender" value="{{ gender }}" class="form-control">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="choose-not-to-say">Choose Not to Say</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="experience_level">Experience Level:</label>
+            <select name="experience_level" id="experience_level" value="{{ experience_level }}" class="form-control">
+                <option value="Member of Technical Staff I">Member of Technical Staff I</option>
+                <option value="Member of Technical Staff II">Member of Technical Staff II</option>
+                <option value="Member of Technical Staff III">Member of Technical Staff III</option>
+                <option value="Software Development Engineer I">Software Development Engineer I</option>
+                <option value="Software Development Engineer II">Software Development Engineer II</option>
+                <option value="Sr. Software Developer">Sr. Software Developer</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
