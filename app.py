@@ -86,10 +86,12 @@ def login():
         # Verify the login credentials
         with open(CREDENTIALS_FILE, 'r') as f:
             credentials_data = json.load(f)
+        user_data = load_user_data()
         if username in credentials_data and credentials_data[username] == password:
             print("WE ARE IN/n/n/n/n")
             session['authenticated'] = True
             session['username'] = username
+            session['role'] = user_data[username]['role']
             provisioning_uri = totp.provisioning_uri(username, issuer_name="MyApp")
             qr = qrcode.QRCode(version=None, box_size=10, border=4)
             qr.add_data(provisioning_uri)
@@ -108,6 +110,25 @@ def login():
     else:
         return render_template('login.html', error=False)
 
+
+def admin_ui():
+    print('An admin logged in')
+    # Redirect to the projects page
+    return redirect(url_for('get_projects'))
+
+
+def manager_ui():
+    print('A manager logged in')
+    # Redirect to the new projects page
+    return redirect(url_for('new_project'))
+
+
+def member_ui():
+    print('A member logged in')
+    # Redirect to the projects page
+    return redirect(url_for('get_member_projects'))
+
+
 @app.route('/authenticate', methods=['GET', 'POST'])
 def authenticate():
     if request.method == 'POST':
@@ -120,8 +141,13 @@ def authenticate():
             # Set a session variable to indicate that the user is authenticated
             session['authenticated'] = True
 
-            # Redirect to the projects page
-            return redirect(url_for('new_project'))
+            role = session['role']
+            if role == 'admin':
+                return admin_ui()
+            elif role == 'manager':
+                return manager_ui()
+            else:
+                return member_ui()
         else:
             return render_template('authenticate.html', error=True)
     else:
