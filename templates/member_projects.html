@@ -31,7 +31,9 @@
   <h1>{{ member_name }}'s Projects</h1>
   <div class="container">
     <form method="post" action="{{ url_for('view_user_effort', username=member_name) }}">
+      {% if session['username'] == member_name %}
       <button type="submit" class="btn btn-primary">View effort logged</button>
+      {% endif %}
     <ul>
       {% for project in projects %}
       <li>
@@ -45,7 +47,7 @@
     {% endfor %}
 
     </ul>
-    
+
     </form>
   </div>
 
