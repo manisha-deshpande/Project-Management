@@ -1,0 +1,135 @@
+{% include 'header.html' %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Effort Log for {{ username }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <style>
+      
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 40px 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      }  h1, h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  ul {
+    margin-top: 0;
+  }
+
+  li {
+    font-size: 16px;
+    line-height: 1.5;
+    list-style: none;
+    margin-bottom: 10px;
+  }
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 18px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    background-color: #f9f9f9;
+    font-weight: bold;
+  }
+
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+
+  button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Effort Log for {{ username }}</h1>
+      <hr>
+      {% if not effort_log %}
+      <p>No effort logged yet.</p>
+      {% else %}
+      <table>
+        <thead>
+          <tr>
+            <th>Project ID</th>
+            <th>Date</th>
+            <th>Hours</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in effort_log %}
+          <tr>
+            <td>{{ entry['project_id'] }}</td>
+            <td>{{ entry['date'] }}</td>
+            <td>{{ entry['hours'] }}</td>
+            <td>{{ entry['description'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+      <br>
+      <br>
+      <button><a href="/">Back to Effort Log</a></button>
+    </div>
+  </body>
+</html>

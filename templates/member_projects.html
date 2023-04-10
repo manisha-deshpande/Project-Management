@@ -30,6 +30,8 @@
 <body>
   <h1>{{ member_name }}'s Projects</h1>
   <div class="container">
+    <form method="post" action="{{ url_for('view_user_effort', username=member_name) }}">
+      <button type="submit" class="btn btn-primary">View effort logged</button>
     <ul>
       {% for project in projects %}
       <li>
@@ -40,8 +42,11 @@
         <p><strong>Details:</strong> {{ project['details'] }}</p>
         {% endif %}
       </li>
-      {% endfor %}
+    {% endfor %}
+
     </ul>
+    
+    </form>
   </div>
 
   <!-- Bootstrap JS -->
