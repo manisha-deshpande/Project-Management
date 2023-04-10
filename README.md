@@ -114,7 +114,6 @@ requirements: This file lists the required packages for the application.
 Projects
 The projects page displays a list of all projects. Users can create new projects by clicking the "New Project" button and filling out the form. Projects are stored in a JSON file located in the data directory.
 
-License
-This project is licensed under the MIT License. See LICENSE for more information.
 
-Author: Prateek Mohan
+
+Author: Manisha Malhar Rao Deshpande, Prateek Mohan, Zahra Falah
