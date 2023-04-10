@@ -52,6 +52,13 @@ here is a detailed overview of the usage of each route in the app.py file:
 
 /edit-profile: This route handles editing of user profiles. It accepts both GET and POST requests. If request method is GET then current user’s profile data such as full name, birthday, gender and experience level are retrieved from session variable ‘username’ using load_user_data() function and passed to edit_profile.html template for rendering with pre-filled values in form fields. If request method is POST then updated values for full name, birthday, gender and experience level are read from request form and saved to user_data.json file using save_user_data() function.
 
+/users/<user_id>: This route handles editing of user permissions. It accepts both GET and POST requests. If request method is GET then user data for user_id is retrieved from user_data.json file using load_user_data() function and passed to admin_permissions.html template for rendering with pre-filled values in form fields. If request method is POST then updated value for role is read from request form and saved to user_data.json file using save_user_data() function.
+
+/users: This route displays a list of all users. It retrieves user data from user_data.json file using json.load() and converts dictionary to list of users which is passed to admin_users.html template for rendering.
+
+/effort_log: This route handles logging of effort by team members. It accepts both GET and POST requests. If request method is GET then user data and projects data are retrieved from user_data.json and projects.json files respectively using json.load(). List of projects where current user is part of team is then passed to effortlogger.html template for rendering. If request method is POST then effort log data such as project_id, date, hours and description are read from request form and added to user_effort.json file using json.dump().
+
+/effort_logged/<username>: This route displays effort log for a specific user. It retrieves effort log data from user_effort.json file using json.load() and filters it to include only entries for specified username. These entries are then sorted by date in descending order and passed to user_effort_log.html template for rendering.
 The script includes comments indicating the author of each function or route. The app uses pyotp and qrcode libraries to handle two-factor authentication.
 
 
