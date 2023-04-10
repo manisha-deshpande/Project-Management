@@ -236,8 +236,8 @@ def new_project():
         new_project = {
             'name': request.form['name'],
             'manager': request.form['manager'],
-            'team': request.form['team'].split(','),
-            'details':request.form['details']
+            'team': request.form.getlist('team'),
+            'details': request.form['details']
         }
         # Generate a new project ID
         with open(PROJECTS_FILE, 'r') as f:
@@ -248,14 +248,32 @@ def new_project():
             projects_data[new_project_id] = new_project
             json.dump(projects_data, f)
         # Redirect to the list of projects
-        return get_projects()
+        return redirect(url_for('get_projects'))
     else:
         # Read the existing projects data from the projects.json file
         with open(PROJECTS_FILE, 'r') as f:
             projects_data = json.load(f)
-        # Convert the dictionary to a list of projects and pass to the template
-        projects = [projects_data[id] for id in projects_data]
-        return render_template('new_project.html', session=session, projects=projects)
+
+        # Get a list of all managers and team members
+        users = load_user_data()
+        managers = set()
+        team_members = set()
+        for user, user_info in users.items():
+            if user_info['role'] == 'manager':
+                managers.add(user)
+            elif user_info['role'] == 'member':
+                team_members.add(user)
+
+        # Convert the sets to sorted lists
+        managers = sorted(managers)
+        team_members = sorted(team_members)
+        print(managers)
+        print(team_members)
+        
+        
+
+        return render_template('new_project.html', session=session, managers=managers, team_members=team_members)
+
 
 @app.route('/projects/details/<project_id>')
 def get_project_details(project_id):
@@ -292,17 +310,20 @@ def get_member_projects():
                 member_projects.append(project_data)
         print(session['username'])
         print(member_name)
+
+
         return render_template('member_projects.html', session=session, member_name=member_name, projects=member_projects)
     else:
-        # Read the existing projects data from the projects.json file
-        with open(PROJECTS_FILE, 'r') as f:
-            projects_data = json.load(f)
-        # Get all team members
-        team_members = set()
-        for project_id, project_data in projects_data.items():
-            for member in project_data['team']:
-                team_members.add(member)
-        return render_template('members.html', session=session, team_members=team_members)
+        # # Read the existing projects data from the projects.json file
+        # with open(PROJECTS_FILE, 'r') as f:
+        #     projects_data = json.load(f)
+        # # Get all team members
+        # team_members = set()
+        # for project_id, project_data in projects_data.items():
+        #     for member in project_data['team']:
+        #         team_members.add(member)
+        users = load_user_data()
+        return render_template('members.html', session=session, team_members=users.keys())
 
 # Define a route for editing user profile
 @app.route('/edit-profile', methods=['GET', 'POST'])
