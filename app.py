@@ -236,8 +236,8 @@ def new_project():
         new_project = {
             'name': request.form['name'],
             'manager': request.form['manager'],
-            'team': request.form['team'].split(','),
-            'details':request.form['details']
+            'team': request.form.getlist('team'),
+            'details': request.form['details']
         }
         # Generate a new project ID
         with open(PROJECTS_FILE, 'r') as f:
@@ -248,14 +248,32 @@ def new_project():
             projects_data[new_project_id] = new_project
             json.dump(projects_data, f)
         # Redirect to the list of projects
-        return get_projects()
+        return redirect(url_for('get_projects'))
     else:
         # Read the existing projects data from the projects.json file
         with open(PROJECTS_FILE, 'r') as f:
             projects_data = json.load(f)
-        # Convert the dictionary to a list of projects and pass to the template
-        projects = [projects_data[id] for id in projects_data]
-        return render_template('new_project.html', session=session, projects=projects)
+
+        # Get a list of all managers and team members
+        users = load_user_data()
+        managers = set()
+        team_members = set()
+        for user, user_info in users.items():
+            if user_info['role'] == 'manager':
+                managers.add(user)
+            elif user_info['role'] == 'member':
+                team_members.add(user)
+
+        # Convert the sets to sorted lists
+        managers = sorted(managers)
+        team_members = sorted(team_members)
+        print(managers)
+        print(team_members)
+        
+        
+
+        return render_template('new_project.html', session=session, managers=managers, team_members=team_members)
+
 
 @app.route('/projects/details/<project_id>')
 def get_project_details(project_id):
@@ -276,7 +294,7 @@ def get_project_details(project_id):
 
 
 @app.route('/members', methods=['GET', 'POST'])
-def get_member_projects():
+def get_member_projects():  
     if 'authenticated' not in session or not session['authenticated']:
         return redirect(url_for('login'))
     if request.method == 'POST':
@@ -290,17 +308,22 @@ def get_member_projects():
         for project_id, project_data in projects_data.items():
             if member_name in project_data['team']:
                 member_projects.append(project_data)
+        print(session['username'])
+        print(member_name)
+
+
         return render_template('member_projects.html', session=session, member_name=member_name, projects=member_projects)
     else:
-        # Read the existing projects data from the projects.json file
-        with open(PROJECTS_FILE, 'r') as f:
-            projects_data = json.load(f)
-        # Get all team members
-        team_members = set()
-        for project_id, project_data in projects_data.items():
-            for member in project_data['team']:
-                team_members.add(member)
-        return render_template('members.html', session=session, team_members=team_members)
+        # # Read the existing projects data from the projects.json file
+        # with open(PROJECTS_FILE, 'r') as f:
+        #     projects_data = json.load(f)
+        # # Get all team members
+        # team_members = set()
+        # for project_id, project_data in projects_data.items():
+        #     for member in project_data['team']:
+        #         team_members.add(member)
+        users = load_user_data()
+        return render_template('members.html', session=session, team_members=users.keys())
 
 # Define a route for editing user profile
 @app.route('/edit-profile', methods=['GET', 'POST'])
@@ -375,6 +398,106 @@ def get_users():
     # Convert the dictionary to a list of projects and pass to the template
     users = [{'id': id, 'user_info': users_data[id]} for id in users_data]
     return render_template('admin_users.html', session=session, users=users)
+
+
+
+
+
+#PRATEEK CODE:
+# Set up the path to the user_effort.json file
+EFFORT_LOG_FILE = os.path.join(data_dir, 'user_effort.json')
+
+# Define a function to load user effort data from a JSON file
+def load_user_effort_data():
+    with open(EFFORT_LOG_FILE, 'r') as f:
+        user_effort_data = json.load(f)
+    return user_effort_data
+
+# Define a function to save user effort data to a JSON file
+def save_user_effort_data(user_effort_data):
+    with open(EFFORT_LOG_FILE, 'w') as f:
+        json.dump(user_effort_data, f, indent=4)
+
+@app.route('/effort_log', methods=['GET', 'POST'])
+def effort_log():
+    # Check if the user is authenticated
+    if 'authenticated' not in session or not session['authenticated']:
+        return redirect(url_for('login'))
+
+    # Load user data
+    user_data = load_user_data()
+
+    # Get the logged in user's email from the session
+    username = session['username']
+    user = user_data[username]
+
+    # If the user is not a member, redirect to the projects page
+    if user['role'] != 'member':
+        return redirect(url_for('get_projects'))
+
+    # Load project data
+    with open(PROJECTS_FILE, 'r') as f:
+        projects_data = json.load(f)
+
+    # Get the list of projects that the user is a part of
+    user_projects = []
+    for project_id, project in projects_data.items():
+        if username in project['team']:
+            user_projects.append({'id': project_id, 'name': project['name'], 'manager': project['manager']})
+
+    if request.method == 'POST':
+        # Get the form data
+        project_id = request.form['project']
+        date = request.form['date']
+        hours = int(request.form['hours'])
+        description = request.form['description']
+
+        # Load effort log data
+        with open(EFFORT_LOG_FILE, 'r') as f:
+            effort_log_data = json.load(f)
+
+        # Add the new log entry
+        log_entry = {
+            'user': user['full_name'],
+            'project_id': project_id,
+            'date': date,
+            'hours': hours,
+            'description': description
+        }
+        effort_log_data.setdefault(username, []).append(log_entry)
+
+        # Save the updated effort log data
+        with open(EFFORT_LOG_FILE, 'w') as f:
+            json.dump(effort_log_data, f)
+
+        print('Effort logged successfully.')
+        return redirect(url_for('view_user_effort', username=username))
+
+    # Render the effort log page
+    return render_template('effortlogger.html', user=user, projects=user_projects)
+
+@app.route('/effort_logged/<username>', methods=['GET','POST'])
+def view_user_effort(username):
+    # Load effort log data
+    with open(EFFORT_LOG_FILE, 'r') as f:
+        effort_log_data = json.load(f)
+    print(effort_log_data)
+
+    # Filter the log data to only include entries for the specified user
+    user_effort_data = effort_log_data.get(username, [])
+    print(user_effort_data)
+
+    # Sort the log entries by date in descending order
+    user_effort_data = sorted(user_effort_data, key=lambda x: x['date'], reverse=True)
+
+    # Render the user's effort log page
+    return render_template('user_effort_log.html', username=username, effort_log=user_effort_data)
+
+
+
+
+
+
 
 # Run the Flask application
 if __name__ == '__main__':

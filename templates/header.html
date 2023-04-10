@@ -4,44 +4,93 @@
     <meta charset="UTF-8">
     <title>My App</title>
     <style>
-        /* override all other styles */
-        * {
-            font-family: Arial, sans-serif !important;
-            font-size: 16px !important;
-            color: #333 !important;
-        }
+        
+       /* override all other styles */
+* {
+  font-family: Arial, sans-serif !important;
+  font-size: 16px !important;
+  color: #333 !important;
+}
 
-        /* style the navigation bar */
-        nav {
-            background-color: #0074D9;
-            color: white;
-            padding: 10px;
-        }
+/* style the navigation bar */
+nav {
+  background-color: #0074D9;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-        /* style the navigation links */
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: space-between;
-        }
+/* style the navigation links */
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
 
-        nav ul li {
-            margin-right: 10px;
-        }
+nav ul li {
+  margin-right: 10px;
+}
 
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
 
-        nav ul li a:hover {
-            background-color: white;
-            color: #0074D9;
-        }
+nav ul li a:hover {
+  background-color: white;
+  color: #0074D9;
+}
+
+/* add a logo or title to the left of the navigation bar */
+nav .logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+nav .logo a {
+  color: white;
+  text-decoration: none;
+}
+
+/* style the profile dropdown */
+nav .profile {
+  position: relative;
+}
+
+nav .profile .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+nav .profile:hover .dropdown-menu {
+  display: block;
+}
+
+nav .profile .dropdown-menu a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  padding: 5px;
+}
+
+nav .profile .dropdown-menu a:hover {
+  background-color: #0074D9;
+  color: white;
+}
+
     </style>
 </head>
 <body>
@@ -52,6 +101,9 @@
             {% endif %}
             {% if session['role'] in ['admin','manager'] %}
             <li><a href="{{ url_for('new_project') }}">New Project</a></li>
+            {% endif %}
+            {% if session['role'] in ['member'] %}
+            <li><a href="{{ url_for('effort_log') }}">Log your Effort</a></li>
             {% endif %}
             {% if session['role'] in ['admin','manager','member'] %}
             <li><a href="{{ url_for('profile') }}">Profile</a></li>
@@ -65,5 +117,6 @@
             {% endif %}
         </ul>
     </nav>
+    
 </body>
 </html>
