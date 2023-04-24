@@ -8,21 +8,44 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 		crossorigin="anonymous">
-	<style>
-		/* Custom CSS */
-		body {
-			padding: 20px;
-		}
-		form {
-			margin-bottom: 20px;
-		}
-		h1 {
-			margin-bottom: 30px;
-		}
-    .team-member-button {
-      margin: 5px;
-    }
-	</style>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<style type="text/css">
+			.team-member {
+				display: inline-block;
+				margin: 10px;
+				padding: 10px;
+				text-align: center;
+			}
+			
+			.team-membe.container {
+				max-width: 800px;
+				margin: 0 auto;
+			}
+			
+			#team-members-list {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			.team-member-button {
+				margin: 10px;
+				padding: 10px;
+				text-align: center;
+			}r img {
+				width: 150px;
+				height: 150px;
+				border-radius: 50%;
+			}
+			
+			.team-member h3 {
+				margin-top: 20px;
+				font-size: 18px;
+			}
+			
+			.team-member p {
+				font-size: 14px;
+			}
+		</style>
 </head>
 <body>
 	<div class="container">

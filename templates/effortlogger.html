@@ -28,58 +28,67 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 {% endblock %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f2f2f2;
-    }
+  body {
+  font-family: Arial, sans-serif;
+  background-color: #F8F8F8;
+}
 
-    h2 {
-        font-family: 'Roboto', sans-serif;
-        font-weight: bold;
-        text-align: center;
-        margin-top: 30px;
-    }
+h2 {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
 
-    form {
-        max-width: 600px;
-        margin: auto;
-        padding: 40px 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-    .form-group {
-        margin-bottom: 20px;
-    }
+.form-group {
+  margin-bottom: 20px;
+}
 
-    label {
-        font-weight: bold;
-    }
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
 
-    input[type="date"],
-    input[type="number"],
-    textarea {
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        padding: 8px;
-        width: 100%;
-    }
+select,
+input[type="date"],
+input[type="number"],
+textarea {
+  border-radius: 5px;
+  border: 1px solid #C0C0C0;
+  padding: 10px;
+  width: 100%;
+}
 
-    button[type="submit"] {
-        background-color: #007bff;
-        border: none;
-        border-radius: 5px;
-        color: #fff;
-        padding: 10px 20px;
-        font-size: 18px;
-        cursor: pointer;
-    }
+textarea {
+  resize: vertical;
+}
 
-    button[type="submit"]:hover {
-        background-color: #0056b3;
-    }
+.btn-primary {
+  background-color: #4CAF50;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #3E8E41;
+}
+  
 </style>
