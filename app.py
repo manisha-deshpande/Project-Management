@@ -6,6 +6,10 @@ import qrcode
 import io
 import base64
 from datetime import datetime
+from flask import Flask, render_template
+import plotly
+import plotly.graph_objs as go
+import json
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -97,7 +101,6 @@ def login():
             credentials_data = json.load(f)
         user_data = load_user_data()
         if username in credentials_data and credentials_data[username] == password:
-            print("WE ARE IN/n/n/n/n")
             session['authenticated'] = True
             session['username'] = username
             session['role'] = user_data[username]['role']
@@ -399,7 +402,25 @@ def get_users():
     users = [{'id': id, 'user_info': users_data[id]} for id in users_data]
     return render_template('admin_users.html', session=session, users=users)
 
+@app.route('/effort_chart/<username>')
+def effort_chart(username):
+    # Load effort log data
+    with open(EFFORT_LOG_FILE, 'r') as f:
+        effort_log_data = json.load(f)
 
+    # Filter the log data to only include entries for the specified user
+    user_effort_data = effort_log_data.get(username, [])
+
+    # Create lists of dates and hours for the chart data
+    dates = [entry['date'] for entry in user_effort_data]
+    hours = [entry['hours'] for entry in user_effort_data]
+
+    # Create a Plotly bar chart
+    data = [go.Bar(x=dates, y=hours)]
+    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+    # Render the chart template with the chart data
+    return render_template('effort_chart.html', graphJSON=graphJSON)
 
 
 

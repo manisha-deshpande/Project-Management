@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Effort Chart</title>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </head>
+    <body>
+        <h1>Effort Chart</h1>
+        <div id="chart"></div>
+        <script>
+            var data = {{ graphJSON | safe }};
+            Plotly.newPlot('chart', data);
+        </script>
+    </body>
+</html>

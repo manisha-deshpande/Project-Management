@@ -3,27 +3,60 @@
 <html>
   <head>
     <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-      }
-      h1 {
-        color: #333;
-        text-align: center;
-      }
-      p {
-        margin: 10px 0;
-        font-size: 18px;
-        color: #666;
-      }
-      .user-info {
-        background-color: #fff;
-        border: 1px solid #ccc;
-        padding: 20px;
-        max-width: 600px;
-        margin: 0 auto;
-      }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f0f0;
+}
+
+.user-info {
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333333;
+  text-align: center;
+  margin-top: 0;
+}
+
+.info-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.info-label {
+  font-weight: bold;
+  color: #666666;
+  flex-basis: 150px;
+}
+
+.info-value {
+  color: #333333;
+}
+
+.edit-button {
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  display: inline-block;
+  text-decoration: none;
+  color: #333333;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.edit-button:hover {
+  background-color: #f2f2f2;
+}
+
     </style>
   </head>
   <body>
