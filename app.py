@@ -7,8 +7,7 @@ import io
 import base64
 from datetime import datetime
 from flask import Flask, render_template
-import plotly
-import plotly.graph_objs as go
+
 import json
 
 # Initialize Flask app
@@ -272,8 +271,8 @@ def new_project():
         team_members = sorted(team_members)
         print(managers)
         print(team_members)
-        
-        
+
+
 
         return render_template('new_project.html', session=session, managers=managers, team_members=team_members)
 
@@ -297,7 +296,7 @@ def get_project_details(project_id):
 
 
 @app.route('/members', methods=['GET', 'POST'])
-def get_member_projects():  
+def get_member_projects():
     if 'authenticated' not in session or not session['authenticated']:
         return redirect(url_for('login'))
     if request.method == 'POST':
