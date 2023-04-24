@@ -101,7 +101,6 @@ def login():
             credentials_data = json.load(f)
         user_data = load_user_data()
         if username in credentials_data and credentials_data[username] == password:
-            print("WE ARE IN/n/n/n/n")
             session['authenticated'] = True
             session['username'] = username
             session['role'] = user_data[username]['role']
